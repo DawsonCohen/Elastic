@@ -1,0 +1,3 @@
+[submodule "Elastic/vendor/spdlog"]
+	path = Elastic/vendor/spdlog
+	url = https://github.com/DawsonCohen/spdlog
