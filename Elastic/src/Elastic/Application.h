@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Core.h"
-
 namespace Elastic {
 
-	class ELASTIC_API Application
+	class Application
 	{
 	public:
 		Application();
