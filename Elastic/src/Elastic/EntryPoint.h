@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Elastic/Application.h"
+#include "Elastic/Log.h"
+
 extern Elastic::Application* Elastic::CreateApplication();
 
 int main(int argc, char** argv)
