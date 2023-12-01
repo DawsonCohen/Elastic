@@ -1,17 +1,17 @@
 #pragma once
 
 #include "Elastic/Application.h"
+#include "Elastic/Base.h"
 
-extern Elastic::Application* Elastic::CreateApplication();
+extern Elastic::Application* Elastic::CreateApplication(ApplicationCommandLineArgs args);
 
 int main(int argc, char** argv)
 {
 	Elastic::Log::Init();
-	EL_CORE_WARN("Initialized Log!");
-	int a = 5;
-	EL_INFO("Hello! Var={0}", a);
 
-	auto app = Elastic::CreateApplication();
+	auto app = Elastic::CreateApplication({ argc, argv });
+
 	app->Run();
+
 	delete app;
 }

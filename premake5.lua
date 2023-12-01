@@ -10,13 +10,26 @@ workspace "Elastic"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["spdlog"] = "Elastic/vendor/spdlog/include"
+IncludeDir["GLFW"] = "Elastic/vendor/GLFW/include"
+IncludeDir["ImGui"] = "Elastic/vendor/imgui/include"
+IncludeDir["Glad"] = "Elastic/vendor/Glad/include"
+
+include "Elastic/vendor/GLFW"
+include "Elastic/vendor/Glad"
+include "Elastic/vendor/imgui"
+
 project "Elastic"
 	location "Elastic"
 	kind "SharedLib"
 	language "C++"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	buildoptions { "-g" }
+
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
@@ -26,7 +39,19 @@ project "Elastic"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/src",
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.imgui}"
+	}
+
+	links 
+	{ 
+		"GLFW",
+		"Glad",
+		"ImGui",
+		"GL"
 	}
 
 	filter "system:linux"
@@ -44,6 +69,9 @@ project "Elastic"
 	filter "configurations:Dist"
 		defines "EL_DIST"
 		optimize "On"
+
+	pchheader "elpch.h"
+	pchsource "src/elpch.cpp"
 
 	postbuildcommands
 	{
@@ -79,14 +107,6 @@ project "Sandbox"
 		pic "On"
 		systemversion "latest"
 
-	filter "configurations:Debug"
-		defines "EL_DEBUG"
-		symbols "On"
-
-	filter "configurations:Release"
-		defines "EL_RELEASE"
-		optimize "On"
-	
 	filter "configurations:Debug"
 		defines "EL_DEBUG"
 		symbols "On"

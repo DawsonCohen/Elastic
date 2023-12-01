@@ -1,21 +1,46 @@
 #include <Elastic.h>
 
-class Sandbox : public Elastic::Application
+class ExampleLayer : public Elastic::Layer
 {
 public:
-	Sandbox()
+	ExampleLayer()
+		: Layer("Example")
 	{
-
 	}
 
-	~Sandbox()
+	void OnUpdate(Elastic::Timestep ts) override
 	{
+		EL_INFO("ExampleLayer::Update");
+	}
 
+	void OnEvent(Elastic::Event& event) override
+	{
+		// EL_TRACE("{0}", event);
 	}
 
 };
 
-Elastic::Application* Elastic::CreateApplication()
+class Sandbox : public Elastic::Application
 {
-	return new Sandbox();
+public:
+	Sandbox(const Elastic::ApplicationSpecification& specification)
+		: Elastic::Application(specification)
+	{
+		PushLayer(new ExampleLayer());
+	}
+
+	~Sandbox()
+	{
+	}
+
+};
+
+Elastic::Application* Elastic::CreateApplication(Elastic::ApplicationCommandLineArgs args)
+{
+	ApplicationSpecification spec;
+	spec.Name = "Sandbox";
+	spec.WorkingDirectory = "../Evodevo";
+	spec.CommandLineArgs = args;
+
+	return new Sandbox(spec);
 }
