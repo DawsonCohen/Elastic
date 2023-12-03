@@ -9,16 +9,16 @@
 
 namespace Elastic {
 	
-	static bool s_GLFWInitialized = false;
+	static uint8_t s_GLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		EL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowProps& props)
 	{
-		return new Window(props);
+		return CreateScope<Window>(props);
 	}
 
 	Window::Window(const WindowProps& props)
@@ -39,21 +39,28 @@ namespace Elastic {
 
 		EL_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!s_GLFWInitialized)
+		if (s_GLFWWindowCount == 0)
 		{
+			EL_PROFILE_SCOPE("glfwInit");
+
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			EL_CORE_ASSERT(success, "Could not intialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
-			s_GLFWInitialized = true;
 		}
 
-		glfwWindowHint(GLFW_VISIBLE, m_Data.Visible ? GLFW_TRUE : GLFW_FALSE);
+		{
+			EL_PROFILE_SCOPE("glfwCreateWindow");
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		EL_CORE_ASSERT(status, "Failed to initialize Glad!");
+			glfwWindowHint(GLFW_VISIBLE, m_Data.Visible ? GLFW_TRUE : GLFW_FALSE);
+
+			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+			++s_GLFWWindowCount;
+		}
+
+		m_Context = GraphicsContext::Create(m_Window);
+		m_Context->Init();
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -152,7 +159,7 @@ namespace Elastic {
 	void Window::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void Window::SetVSync(bool enabled)

@@ -8,3 +8,6 @@
 	path = Elastic/vendor/imgui
 	url = https://github.com/DawsonCohen/imgui
 	branch = docking
+[submodule "Elastic/vendor/glm"]
+	path = Elastic/vendor/glm
+	url = https://github.com/g-truc/glm

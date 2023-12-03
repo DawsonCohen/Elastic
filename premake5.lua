@@ -16,6 +16,7 @@ IncludeDir["spdlog"] = "Elastic/vendor/spdlog/include"
 IncludeDir["GLFW"] = "Elastic/vendor/GLFW/include"
 IncludeDir["ImGui"] = "Elastic/vendor/imgui"
 IncludeDir["Glad"] = "Elastic/vendor/Glad/include"
+IncludeDir["glm"] = "Elastic/vendor/glm"
 
 include "Elastic/vendor/GLFW"
 include "Elastic/vendor/Glad"
@@ -25,6 +26,7 @@ project "Elastic"
 	location "Elastic"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "on"
 
 	buildoptions { "-g" }
 
@@ -34,7 +36,9 @@ project "Elastic"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
 	}
 
 	includedirs
@@ -43,7 +47,8 @@ project "Elastic"
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links 
@@ -60,20 +65,20 @@ project "Elastic"
 	}
 	
 	filter "system:linux"
-		pic "On"
+		pic "on"
 		systemversion "latest"
 
 	filter "configurations:Debug"
 		defines "EL_DEBUG"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "EL_RELEASE"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EL_DIST"
-		optimize "On"
+		optimize "on"
 
 	pchheader "elpch.h"
 	pchsource "src/elpch.cpp"
@@ -102,7 +107,8 @@ project "Sandbox"
 	{
 		"%{IncludeDir.spdlog}",
 		"%{wks.location}/Elastic/vendor",
-		"Elastic/src"
+		"%{IncludeDir.glm}",
+		"%{wks.location}/Elastic/src"
 	}
 
 	links
@@ -111,17 +117,17 @@ project "Sandbox"
 	}
 
 	filter "system:linux"
-		pic "On"
+		pic "on"
 		systemversion "latest"
 
 	filter "configurations:Debug"
 		defines "EL_DEBUG"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "EL_RELEASE"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EL_DIST"
-		optimize "On"
+		optimize "on"

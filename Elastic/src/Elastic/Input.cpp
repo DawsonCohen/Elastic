@@ -20,7 +20,7 @@ namespace Elastic {
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> Input::GetMousePosition()
+	glm::vec2 Input::GetMousePosition()
 	{
 		auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xpos, ypos;
@@ -31,12 +31,12 @@ namespace Elastic {
 
 	float Input::GetMouseX()
 	{
-		return GetMousePosition().first;
+		return GetMousePosition().x;
 	}
 
 	float Input::GetMouseY()
 	{
-		return GetMousePosition().second;
+		return GetMousePosition().y;
 	}
 
 }

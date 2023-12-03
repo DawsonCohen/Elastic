@@ -3,11 +3,11 @@
 #include "Elastic/Base.h"
 #include "Elastic/Events/Event.h"
 
+#include "Elastic/Renderer/GraphicsContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Elastic {
-	static uint8_t s_GLFWWindowCount = 0;
-
 	struct WindowProps
 	{
 		std::string Title;
@@ -44,7 +44,7 @@ namespace Elastic {
 
 		inline void* GetNativeWindow() const { return m_Window; }
 
-		static Window* Create(const WindowProps& props = WindowProps());
+		static Scope<Window> Create(const WindowProps& props = WindowProps());
 
 	private:
 		void Init(const WindowProps& props);
@@ -52,7 +52,8 @@ namespace Elastic {
 
 	private:
 		GLFWwindow* m_Window;
-
+		Scope<GraphicsContext> m_Context;
+		
 		struct WindowData
 		{
 			std::string Title;

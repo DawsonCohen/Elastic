@@ -1,11 +1,11 @@
 #include "elpch.h"
 #include "Application.h"
 
-#include "Elastic/Base.h"
-#include "Elastic/Utils/Utils.h"
+#include "Elastic/Log.h"
+#include "Elastic/Renderer/Renderer.h"
 
-#include <glad/glad.h>
 #include "Elastic/Input.h"
+#include "Elastic/Utils/Utils.h"
 
 namespace Elastic {
 	Application* Application::s_Instance = nullptr;
@@ -17,13 +17,13 @@ namespace Elastic {
 		s_Instance = this;
 
 		// Set working directory here
-		// if (!m_Specification.WorkingDirectory.empty())
-		// 	std::filesystem::current_path(m_Specification.WorkingDirectory);
+		if (!m_Specification.WorkingDirectory.empty())
+			std::filesystem::current_path(m_Specification.WorkingDirectory);
 
 		m_Window = Window::Create(WindowProps(m_Specification.Name));
 		m_Window->SetEventCallback(EL_BIND_EVENT_FN(Application::OnEvent));
 
-		// Renderer::Init();
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -31,6 +31,7 @@ namespace Elastic {
 
 	Application::~Application()
 	{
+		Renderer::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -81,8 +82,7 @@ namespace Elastic {
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			glClearColor(185.0/255.0, 217.0/255.0, 235.0/255.0,1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			ExecuteMainThreadQueue();
 			
 			{
 				EL_PROFILE_SCOPE("LayerStack OnUpdate");
@@ -115,7 +115,7 @@ namespace Elastic {
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 			return false;
 
-		// Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 
 		return false;
 	}

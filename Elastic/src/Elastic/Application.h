@@ -27,7 +27,7 @@ namespace Elastic {
 
 	struct ApplicationSpecification
 	{
-		std::string Name = "Hazel Application";
+		std::string Name = "Elastic Application";
 		std::string WorkingDirectory;
 		ApplicationCommandLineArgs CommandLineArgs;
 	};
@@ -62,7 +62,7 @@ namespace Elastic {
 		void ExecuteMainThreadQueue();
 	private:
 		ApplicationSpecification m_Specification;
-		Window* m_Window;
+		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;

@@ -1,31 +1,7 @@
 #include <Elastic.h>
-#include "imgui/imgui.h"
+#include <Elastic/EntryPoint.h>
 
-class ExampleLayer : public Elastic::Layer
-{
-public:
-	ExampleLayer()
-		: Layer("Example")
-	{
-	}
-
-	void OnUpdate(Elastic::Timestep ts) override
-	{
-	}
-
-	void OnEvent(Elastic::Event& event) override
-	{
-		// EL_TRACE("{0}", event);
-	}
-
-	void OnImGuiRender() override
-	{
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
-		ImGui::End();
-	}
-
-};
+#include "ExampleLayer.h"
 
 class Sandbox : public Elastic::Application
 {
@@ -46,7 +22,7 @@ Elastic::Application* Elastic::CreateApplication(Elastic::ApplicationCommandLine
 {
 	ApplicationSpecification spec;
 	spec.Name = "Sandbox";
-	spec.WorkingDirectory = "../Evodevo";
+	spec.WorkingDirectory = "Sandbox";
 	spec.CommandLineArgs = args;
 
 	return new Sandbox(spec);
