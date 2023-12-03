@@ -1,4 +1,5 @@
 #include <Elastic.h>
+#include "imgui/imgui.h"
 
 class ExampleLayer : public Elastic::Layer
 {
@@ -10,12 +11,18 @@ public:
 
 	void OnUpdate(Elastic::Timestep ts) override
 	{
-		EL_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(Elastic::Event& event) override
 	{
 		// EL_TRACE("{0}", event);
+	}
+
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 };

@@ -5,6 +5,8 @@
 #include "Elastic/Events/MouseEvent.h"
 #include "Elastic/Events/KeyEvent.h"
 
+#include <glad/glad.h>
+
 namespace Elastic {
 	
 	static bool s_GLFWInitialized = false;
@@ -34,11 +36,10 @@ namespace Elastic {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-		m_Data.Visible = props.Visible;
 
 		EL_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (s_GLFWWindowCount == 0)
+		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
@@ -51,6 +52,8 @@ namespace Elastic {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		EL_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

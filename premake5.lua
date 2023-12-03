@@ -14,7 +14,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["spdlog"] = "Elastic/vendor/spdlog/include"
 IncludeDir["GLFW"] = "Elastic/vendor/GLFW/include"
-IncludeDir["ImGui"] = "Elastic/vendor/imgui/include"
+IncludeDir["ImGui"] = "Elastic/vendor/imgui"
 IncludeDir["Glad"] = "Elastic/vendor/Glad/include"
 
 include "Elastic/vendor/GLFW"
@@ -43,7 +43,7 @@ project "Elastic"
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.imgui}"
+		"%{IncludeDir.ImGui}"
 	}
 
 	links 
@@ -54,6 +54,11 @@ project "Elastic"
 		"GL"
 	}
 
+	defines
+	{
+		"GLFW_INCLUDE_NONE"
+	}
+	
 	filter "system:linux"
 		pic "On"
 		systemversion "latest"
@@ -72,6 +77,7 @@ project "Elastic"
 
 	pchheader "elpch.h"
 	pchsource "src/elpch.cpp"
+
 
 	postbuildcommands
 	{
@@ -94,7 +100,8 @@ project "Sandbox"
 
 	includedirs
 	{
-		"Elastic/vendor/spdlog/include",
+		"%{IncludeDir.spdlog}",
+		"%{wks.location}/Elastic/vendor",
 		"Elastic/src"
 	}
 

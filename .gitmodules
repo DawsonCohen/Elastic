@@ -1,3 +1,10 @@
 [submodule "Elastic/vendor/spdlog"]
 	path = Elastic/vendor/spdlog
 	url = https://github.com/DawsonCohen/spdlog
+[submodule "Elastic/vendor/GLFW"]
+	path = Elastic/vendor/GLFW
+	url = https://github.com/DawsonCohen/GLFW
+[submodule "Elastic/vendor/imgui"]
+	path = Elastic/vendor/imgui
+	url = https://github.com/DawsonCohen/imgui
+	branch = docking

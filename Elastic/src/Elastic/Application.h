@@ -9,6 +9,8 @@
 
 #include "Elastic/Timestep.h"
 
+#include "Elastic/ImGui/ImGuiLayer.h"
+
 namespace Elastic {
 
 	struct ApplicationCommandLineArgs
@@ -47,6 +49,8 @@ namespace Elastic {
 		
 		void Close();
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
 		static Application& Get() { return *s_Instance; }
 		const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 
@@ -59,6 +63,7 @@ namespace Elastic {
 	private:
 		ApplicationSpecification m_Specification;
 		Window* m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;

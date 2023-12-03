@@ -1,9 +1,10 @@
 #include "elpch.h"
-
 #include "Application.h"
 
 #include "Elastic/Base.h"
 #include "Elastic/Utils/Utils.h"
+
+#include <glad/glad.h>
 
 namespace Elastic {
 	Application* Application::s_Instance = nullptr;
@@ -23,8 +24,8 @@ namespace Elastic {
 
 		// Renderer::Init();
 
-		// m_ImGuiLayer = new ImGuiLayer();
-		// PushOverlay(m_ImGuiLayer);
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
@@ -57,7 +58,6 @@ namespace Elastic {
 
 	void Application::OnEvent(Event& e)
 	{
-		
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(EL_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(EL_BIND_EVENT_FN(Application::OnWindowResize));
@@ -70,29 +70,47 @@ namespace Elastic {
 		}
 	}
 
-	
-
 	void Application::Run()
 	{
-		while (m_Running) {
+		EL_PROFILE_FUNCTION();
+
+		while (m_Running)
+		{
 			float time = Time::GetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			glClearColor(1,0,1,1);
+			glClearColor(185.0/255.0, 217.0/255.0, 235.0/255.0,1);
 			glClear(GL_COLOR_BUFFER_BIT);
+			
+			{
+				EL_PROFILE_SCOPE("LayerStack OnUpdate");
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+			}
+
+			m_ImGuiLayer->Begin();
+			{
+				EL_PROFILE_SCOPE("LayerStack OnImGuiRender");
+				for (Layer* layer : m_LayerStack)
+					layer->OnImGuiRender();
+			}
+			m_ImGuiLayer->End();
+				
 			m_Window->OnUpdate();
 		}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
+		EL_PROFILE_FUNCTION();
 		m_Running = false;
 		return true;
 	}
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		EL_PROFILE_FUNCTION();
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 			return false;
 
@@ -101,5 +119,14 @@ namespace Elastic {
 		return false;
 	}
 
+	void Application::ExecuteMainThreadQueue()
+	{
+		std::scoped_lock<std::mutex> lock(m_MainThreadQueueMutex);
+
+		for (auto& func : m_MainThreadQueue)
+			func();
+
+		m_MainThreadQueue.clear();
+	}
 
 }

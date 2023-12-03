@@ -34,8 +34,8 @@ namespace Elastic {
 
 		void OnUpdate();
 
-		uint32_t GetWidth() const;
-		uint32_t GetHeight() const;
+		inline unsigned int GetWidth() const { return m_Data.Width; }
+		inline unsigned int GetHeight() const { return m_Data.Height; }
 
 		// Window attributes
 		void SetEventCallback(const EventCallbackFn& callback) { m_Data.EventCallback = callback; }
