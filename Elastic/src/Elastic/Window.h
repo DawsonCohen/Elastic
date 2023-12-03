@@ -42,7 +42,7 @@ namespace Elastic {
 		void SetVSync(bool enabled);
 		bool IsVSync() const;
 
-		void* GetNativeWindow() const { return m_Window; }
+		inline void* GetNativeWindow() const { return m_Window; }
 
 		static Window* Create(const WindowProps& props = WindowProps());
 

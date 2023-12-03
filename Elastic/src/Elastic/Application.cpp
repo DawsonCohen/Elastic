@@ -5,6 +5,7 @@
 #include "Elastic/Utils/Utils.h"
 
 #include <glad/glad.h>
+#include "Elastic/Input.h"
 
 namespace Elastic {
 	Application* Application::s_Instance = nullptr;
