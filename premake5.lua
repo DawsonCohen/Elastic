@@ -28,10 +28,11 @@ project "Elastic"
 	language "C++"
 	staticruntime "on"
 
-	buildoptions { "-g" }
-
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+
+	pchheader "elpch.h"
+	pchsource "src/elpch.cpp"
 
 	files
 	{
@@ -64,6 +65,11 @@ project "Elastic"
 		"GLFW_INCLUDE_NONE"
 	}
 	
+	postbuildcommands
+	{
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+	}
+
 	filter "system:linux"
 		pic "on"
 		systemversion "latest"
@@ -80,14 +86,6 @@ project "Elastic"
 		defines "EL_DIST"
 		optimize "on"
 
-	pchheader "elpch.h"
-	pchsource "src/elpch.cpp"
-
-
-	postbuildcommands
-	{
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-	}
 
 project "Sandbox"
 	location "Sandbox"

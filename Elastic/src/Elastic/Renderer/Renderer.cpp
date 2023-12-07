@@ -1,6 +1,6 @@
 #include "elpch.h"
 #include "Elastic/Renderer/Renderer.h"
-
+#include "Elastic/Renderer/Renderer3D.h"
 namespace Elastic {
 
 	Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
@@ -8,6 +8,7 @@ namespace Elastic {
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer3D::Init();
 	}
 
 	void Renderer::Shutdown()
@@ -19,7 +20,7 @@ namespace Elastic {
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrthographicCamera& camera)
+	void Renderer::BeginScene(Camera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}

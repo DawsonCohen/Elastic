@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Elastic/Base.h"
+#include "Elastic/Core/Base.h"
 #include "GLFW/glfw3.h"
 
 namespace Elastic {

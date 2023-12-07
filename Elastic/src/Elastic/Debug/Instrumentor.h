@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Elastic/Log.h"
+#include "Elastic/Core/Log.h"
 
 #include <algorithm>
 #include <chrono>

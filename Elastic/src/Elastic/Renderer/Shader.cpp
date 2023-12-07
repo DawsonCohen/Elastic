@@ -68,6 +68,8 @@ namespace Elastic {
 
 	Shader::Shader(const std::string& filepath)
 	{
+		EL_PROFILE_FUNCTION();
+
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -83,6 +85,8 @@ namespace Elastic {
 	Shader::Shader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 		: m_Name(name)
 	{
+		EL_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -91,11 +95,15 @@ namespace Elastic {
 
 	Shader::~Shader()
 	{
+		EL_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	std::string Shader::ReadFile(const std::string& filepath)
 	{
+		EL_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(filepath, std::ios::in | std::ios::binary); // ifstream closes itself due to RAII
 		if (in)
@@ -123,6 +131,8 @@ namespace Elastic {
 
 	std::unordered_map<GLenum, std::string> Shader::PreProcess(const std::string& source)
 	{
+		EL_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -148,6 +158,8 @@ namespace Elastic {
 
 	void Shader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		EL_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		EL_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
 		std::array<GLenum, 2> glShaderIDs;
@@ -222,46 +234,64 @@ namespace Elastic {
 
 	void Shader::Bind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 
 	void Shader::Unbind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
 	void Shader::SetInt(const std::string& name, int value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformInt(name, value);
 	}
 
 	void Shader::SetIntArray(const std::string& name, int* values, uint32_t count)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformIntArray(name, values, count);
 	}
 
 	void Shader::SetFloat(const std::string& name, float value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformFloat(name, value);
 	}
 
 	void Shader::SetFloat2(const std::string& name, const glm::vec2& value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformFloat2(name, value);
 	}
 
 	void Shader::SetFloat3(const std::string& name, const glm::vec3& value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformFloat3(name, value);
 	}
 
 	void Shader::SetFloat4(const std::string& name, const glm::vec4& value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformFloat4(name, value);
 	}
 
 	void Shader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
+		EL_PROFILE_FUNCTION();
+
 		UploadUniformMat4(name, value);
 	}
 

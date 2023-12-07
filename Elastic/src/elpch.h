@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ELASTIC_PCH_H__
+#define __ELASTIC_PCH_H__
 
 #include <iostream>
 #include <memory>
@@ -13,6 +14,10 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Elastic/Base.h"
+#include "Elastic/Core/Base.h"
 
-#include "Elastic/Log.h"
+#include "Elastic/Core/Log.h"
+
+#include "Elastic/Debug/Instrumentor.h"
+
+#endif

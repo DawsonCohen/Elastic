@@ -33,26 +33,36 @@ namespace Elastic {
 
 	VertexArray::VertexArray()
 	{
+		EL_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &m_RendererID);
 	}
 
 	VertexArray::~VertexArray()
 	{
+		EL_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void VertexArray::Bind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void VertexArray::Unbind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
 	{
+		EL_PROFILE_FUNCTION();
+
 		EL_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_RendererID);
@@ -77,6 +87,8 @@ namespace Elastic {
 
 	void VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();
 

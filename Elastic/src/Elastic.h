@@ -2,23 +2,24 @@
 
 // For use by Elastic applications
 
-#include "Elastic/Base.h"
+#include "Elastic/Core/Base.h"
 
-#include "Elastic/Application.h"
-#include "Elastic/Layer.h"
-#include "Elastic/Log.h"
-#include "Elastic/Assert.h"
+#include "Elastic/Core/Application.h"
+#include "Elastic/Core/Layer.h"
+#include "Elastic/Core/Log.h"
+#include "Elastic/Core/Assert.h"
 
-#include "Elastic/Timestep.h"
+#include "Elastic/Core/Timestep.h"
 
-#include "Elastic/Input.h"
-#include "Elastic/KeyCodes.h"
-#include "Elastic/MouseCodes.h"
+#include "Elastic/Core/Input.h"
+#include "Elastic/Core/KeyCodes.h"
+#include "Elastic/Core/MouseCodes.h"
 
 #include "Elastic/ImGui/ImGuiLayer.h"
 
 // ---Renderer------------------------
 #include "Elastic/Renderer/Renderer.h"
+#include "Elastic/Renderer/Renderer3D.h"
 #include "Elastic/Renderer/RenderCommand.h"
 
 #include "Elastic/Renderer/Buffer.h"
@@ -26,8 +27,9 @@
 #include "Elastic/Renderer/Framebuffer.h"
 #include "Elastic/Renderer/VertexArray.h"
 
-#include "Elastic/Renderer/EditorCamera.h"
-#include "Elastic/Renderer/OrthographicCamera.h"
-#include "Elastic/Renderer/OrthographicCameraController.h"
+#include "Elastic/Renderer/Camera.h"
+#include "Elastic/Renderer/CameraController.h"
+
+#include "Elastic/Scene/Mesh.h"
 
 // -----------------------------------

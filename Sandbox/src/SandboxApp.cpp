@@ -1,7 +1,7 @@
 #include <Elastic.h>
-#include <Elastic/EntryPoint.h>
+#include <Elastic/Core/EntryPoint.h>
 
-#include "ExampleLayer.h"
+#include "Sandbox2D.h"
 
 class Sandbox : public Elastic::Application
 {
@@ -9,7 +9,7 @@ public:
 	Sandbox(const Elastic::ApplicationSpecification& specification)
 		: Elastic::Application(specification)
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

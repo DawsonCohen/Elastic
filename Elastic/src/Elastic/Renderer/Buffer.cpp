@@ -27,6 +27,8 @@ namespace Elastic {
 
 	VertexBuffer::VertexBuffer(uint32_t size)
 	{
+		EL_PROFILE_FUNCTION();
+		
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
@@ -34,6 +36,8 @@ namespace Elastic {
 
 	VertexBuffer::VertexBuffer(float* vertices, uint32_t size)
 	{
+		EL_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
@@ -41,16 +45,22 @@ namespace Elastic {
 
 	VertexBuffer::~VertexBuffer()
 	{
+		EL_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
 	void VertexBuffer::Bind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void VertexBuffer::Unbind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
@@ -67,6 +77,8 @@ namespace Elastic {
 	IndexBuffer::IndexBuffer(uint32_t* indices, uint32_t count)
 		: m_Count(count)
 	{
+		EL_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &m_RendererID);
 		
 		// GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
@@ -82,11 +94,15 @@ namespace Elastic {
 
 	void IndexBuffer::Bind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void IndexBuffer::Unbind() const
 	{
+		EL_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

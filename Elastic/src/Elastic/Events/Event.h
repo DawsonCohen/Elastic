@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Elastic/Debug/Instrumentor.h"
-#include "Elastic/Base.h"
+#include "Elastic/Core/Base.h"
 
 namespace Elastic {
 
