@@ -43,7 +43,7 @@ namespace Elastic {
         std::vector<Facet> GetFacets() const { return m_Facets; }
         float GetOpacity() const { return opacity; }
 
-    private:
+    protected:
         std::vector<Vertex> m_Vertices;
         std::vector<Edge> m_Edges;
         std::vector<Facet> m_Facets;
