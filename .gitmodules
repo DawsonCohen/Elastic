@@ -1,9 +1,11 @@
 [submodule "Elastic/vendor/spdlog"]
 	path = Elastic/vendor/spdlog
 	url = https://github.com/DawsonCohen/spdlog
+	branch = v1.x
 [submodule "Elastic/vendor/GLFW"]
 	path = Elastic/vendor/GLFW
 	url = https://github.com/DawsonCohen/GLFW
+	branch = master
 [submodule "Elastic/vendor/imgui"]
 	path = Elastic/vendor/imgui
 	url = https://github.com/DawsonCohen/imgui
@@ -11,3 +13,4 @@
 [submodule "Elastic/vendor/glm"]
 	path = Elastic/vendor/glm
 	url = https://github.com/g-truc/glm
+	branch = master
