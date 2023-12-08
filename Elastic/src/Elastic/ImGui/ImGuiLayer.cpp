@@ -1,4 +1,5 @@
 #include "elpch.h"
+#include <glad/glad.h>
 #include "Elastic/ImGui/ImGuiLayer.h"
 
 #include <imgui.h>
@@ -11,7 +12,6 @@
 
 // TEMPORARY
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 namespace Elastic {
 

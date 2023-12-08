@@ -2,9 +2,20 @@
 .vs/
 bin/
 bin-int/
+CMakeFiles
 
 # Files
+SandboxApp
 *.user
 
 .vscode
 Makefile
+
+CMakeCache.txt
+cmake_install.cmake
+*.out
+*.a
+*.so
+*.cmake
+Makefile
+*.ini

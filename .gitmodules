@@ -1,10 +1,10 @@
 [submodule "Elastic/vendor/spdlog"]
 	path = Elastic/vendor/spdlog
-	url = https://github.com/DawsonCohen/spdlog
+	url = https://github.com/gabime/spdlog
 	branch = v1.x
 [submodule "Elastic/vendor/GLFW"]
 	path = Elastic/vendor/GLFW
-	url = https://github.com/DawsonCohen/GLFW
+	url = https://github.com/glfw/glfw
 	branch = master
 [submodule "Elastic/vendor/imgui"]
 	path = Elastic/vendor/imgui

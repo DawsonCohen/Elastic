@@ -1,11 +1,13 @@
 #include "elpch.h"
+
+#include <glad/glad.h>
+
 #include "Window.h"
 
 #include "Elastic/Events/ApplicationEvent.h"
 #include "Elastic/Events/MouseEvent.h"
 #include "Elastic/Events/KeyEvent.h"
 
-#include <glad/glad.h>
 
 namespace Elastic {
 	

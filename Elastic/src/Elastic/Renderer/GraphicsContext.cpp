@@ -1,11 +1,10 @@
 #include "elpch.h"
+#include <glad/glad.h>
 #include "Elastic/Renderer/GraphicsContext.h"
 
 // #include "Elastic/Renderer/Renderer.h"
 #include "Elastic/Core/Base.h"
 
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 namespace Elastic {
 
