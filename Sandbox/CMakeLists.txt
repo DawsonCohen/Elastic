@@ -1,10 +1,9 @@
 # Sandbox executable
 cmake_minimum_required(VERSION 3.11)
 
-set(CMAKE_CUDA_COMPILER "nvcc")
-# set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-# set(CMAKE_CXX_STANDARD 17)
-# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB SANDBOX_SRC ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB SANDBOX_HEAD ${CMAKE_SOURCE_DIR}/src/*.h)

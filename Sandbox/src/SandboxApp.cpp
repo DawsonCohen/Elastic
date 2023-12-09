@@ -1,4 +1,5 @@
 #include <Elastic.h>
+#include "Elastic/Core/EntryPoint.h"
 
 #include "Sandbox2D.h"
 
@@ -21,25 +22,8 @@ Elastic::Application* Elastic::CreateApplication(Elastic::ApplicationCommandLine
 {
 	ApplicationSpecification spec;
 	spec.Name = "Sandbox";
-	spec.WorkingDirectory = "Sandbox";
+	spec.WorkingDirectory = ".";
 	spec.CommandLineArgs = args;
 
 	return new Sandbox(spec);
-}
-
-int main(int argc, char** argv)
-{
-	Elastic::Log::Init();
-
-	EL_PROFILE_BEGIN_SESSION("Startup", "ElasticProfile-Startup.json");
-	auto app = Elastic::CreateApplication({ argc, argv });
-	EL_PROFILE_END_SESSION();
-
-	EL_PROFILE_BEGIN_SESSION("Runtime", "ElasticProfile-Runtime.json");
-	app->Run();
-	EL_PROFILE_END_SESSION();
-
-	EL_PROFILE_BEGIN_SESSION("Shutdown", "ElasticProfile-Shutdown.json");
-	delete app;
-	EL_PROFILE_END_SESSION();
 }
