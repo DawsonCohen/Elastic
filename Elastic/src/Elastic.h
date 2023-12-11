@@ -10,6 +10,7 @@
 #include "Elastic/Core/Assert.h"
 
 #include "Elastic/Core/Timestep.h"
+#include "Elastic/Utils/Utils.h"
 
 #include "Elastic/Core/Input.h"
 #include "Elastic/Core/KeyCodes.h"

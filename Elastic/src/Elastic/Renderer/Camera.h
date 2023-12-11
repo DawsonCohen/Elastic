@@ -5,6 +5,7 @@
 #include "Elastic/Events/MouseEvent.h"
 
 #include <glm/glm.hpp>
+#include <iostream>
 
 namespace Elastic {
 
@@ -36,8 +37,8 @@ namespace Elastic {
 		glm::vec3 GetForwardDirection() const;
 
 		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; UpdateView(); }
 		void UpdatePosition(const glm::vec3& delta);
+		void SetFocalPoint(const glm::vec3& focalPoint) { m_FocalPoint = focalPoint; UpdateView(); }
 		
 		glm::quat GetOrientation() const;
 
@@ -72,7 +73,7 @@ namespace Elastic {
 		glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
-		glm::vec3 m_Position = { 0.0f, 0.0f, 10.0f };
+		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 m_FocalPoint = { 0.0f, 0.0f, 0.0f };
 
 		glm::vec2 m_InitialMousePosition = { 0.0f, 0.0f };

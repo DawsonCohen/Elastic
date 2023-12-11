@@ -62,14 +62,22 @@ namespace Elastic {
 	void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
 	{
 		vertexArray->Bind();
-		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
-		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+		glDrawArrays(GL_TRIANGLES, 0, indexCount);
+	}
+
+	void RenderCommand::DrawArrays(const Ref<VertexArray>& vertexArray, uint32_t vertexCount)
+	{
+		vertexArray->Bind();
+		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 	}
 
 	void RenderCommand::DrawLines(const Ref<VertexArray>& vertexArray, uint32_t vertexCount)
 	{
 		vertexArray->Bind();
+		glDisable(GL_DEPTH_TEST);
+		// glDepthMask(GL_FALSE);
 		glDrawArrays(GL_LINES, 0, vertexCount);
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	void RenderCommand::SetLineWidth(float width)

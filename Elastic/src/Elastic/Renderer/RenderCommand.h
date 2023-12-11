@@ -16,6 +16,7 @@ namespace Elastic {
 		static void Clear();
 
 		static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
+		static void DrawArrays(const Ref<VertexArray>& vertexArray, uint32_t vertexCount);
 
 		static void DrawLines(const Ref<VertexArray>& vertexArray, uint32_t vertexCount);
 		static void SetLineWidth(float width);

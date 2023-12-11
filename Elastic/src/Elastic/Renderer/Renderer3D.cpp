@@ -13,8 +13,8 @@ namespace Elastic {
 
 	struct Renderer3DData
 	{
-		static const uint32_t MaxVertices = 10000;
-		static const uint32_t MaxIndices = 30000;
+		static const uint32_t MaxVertices = 1000000;
+		static const uint32_t MaxIndices = 3000000;
 
 		Ref<VertexArray> TriangleVertexArray;
 		Ref<VertexBuffer> TriangleVertexBuffer;
@@ -24,7 +24,7 @@ namespace Elastic {
 		Ref<VertexBuffer> LineVertexBuffer;
 		Ref<Shader> LineShader;	
 		
-		uint32_t TriangleIndexCount = 0;
+		uint32_t TriangleVertexCount = 0;
 		Vertex* TriangleVertexBufferBase = nullptr;
 		Vertex* TriangleVertexBufferPtr = nullptr;
 
@@ -58,26 +58,6 @@ namespace Elastic {
 		s_Data.TriangleVertexArray->AddVertexBuffer(s_Data.TriangleVertexBuffer);
 
 		s_Data.TriangleVertexBufferBase = new Vertex[s_Data.MaxVertices];
-
-		uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];
-
-		uint32_t offset = 0;
-		for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
-		{
-			quadIndices[i + 0] = offset + 0;
-			quadIndices[i + 1] = offset + 1;
-			quadIndices[i + 2] = offset + 2;
-
-			quadIndices[i + 3] = offset + 2;
-			quadIndices[i + 4] = offset + 3;
-			quadIndices[i + 5] = offset + 0;
-
-			offset += 4;
-		}
-
-		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
-		s_Data.TriangleVertexArray->SetIndexBuffer(quadIB);
-		delete[] quadIndices;
 
 		// Lines
 		s_Data.LineVertexArray = VertexArray::Create();
@@ -132,22 +112,22 @@ namespace Elastic {
 
 	void Renderer3D::StartBatch()
 	{
-		s_Data.TriangleIndexCount = 0;
+		s_Data.TriangleVertexCount = 0;
 		s_Data.TriangleVertexBufferPtr = s_Data.TriangleVertexBufferBase;
 
 		s_Data.LineVertexCount = 0;
-		s_Data.LineVertexBufferPtr = s_Data.LineVertexBufferBase;	
+		s_Data.LineVertexBufferPtr = s_Data.LineVertexBufferBase;
 	}
 
 	void Renderer3D::Flush()
 	{
-		if (s_Data.TriangleIndexCount)
+		if (s_Data.TriangleVertexCount)
 		{
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.TriangleVertexBufferPtr - (uint8_t*)s_Data.TriangleVertexBufferBase);
 			s_Data.TriangleVertexBuffer->SetData(s_Data.TriangleVertexBufferBase, dataSize);
 
 			s_Data.TriangleShader->Bind();
-			RenderCommand::DrawIndexed(s_Data.TriangleVertexArray, s_Data.TriangleIndexCount);
+			RenderCommand::DrawArrays(s_Data.TriangleVertexArray, s_Data.TriangleVertexCount);
 		}
 
 		if (s_Data.LineVertexCount)
@@ -157,7 +137,6 @@ namespace Elastic {
 
 			s_Data.LineShader->Bind();
 			RenderCommand::SetLineWidth(s_Data.LineWidth);
-			EL_INFO("Vertex Count: {0}", s_Data.LineVertexCount);
 			RenderCommand::DrawLines(s_Data.LineVertexArray, s_Data.LineVertexCount);
 		}
 	}
@@ -182,7 +161,7 @@ namespace Elastic {
 		s_Data.TriangleVertexBufferPtr->Color = color;
 		s_Data.TriangleVertexBufferPtr++;
 
-		s_Data.TriangleIndexCount += 3;
+		s_Data.TriangleVertexCount += 3;
 	}
 
 	void Renderer3D::DrawLine(const glm::vec3& p0, const glm::vec3& p1, const glm::vec4& color)
@@ -221,7 +200,6 @@ namespace Elastic {
 			Vertex v2 = mesh.GetVertex(f.v2);
 			Vertex v3 = mesh.GetVertex(f.v3);
 			glm::vec4 color = f.Color;
-			color[3] = f.Color[3] * mesh.GetOpacity();
 			
 			s_Data.TriangleVertexBufferPtr->Position = v1.Position;
 			s_Data.TriangleVertexBufferPtr->Color = color;
@@ -231,11 +209,11 @@ namespace Elastic {
 			s_Data.TriangleVertexBufferPtr->Color = color;
 			s_Data.TriangleVertexBufferPtr++;
 
-			s_Data.TriangleVertexBufferPtr->Position = v2.Position;
+			s_Data.TriangleVertexBufferPtr->Position = v3.Position;
 			s_Data.TriangleVertexBufferPtr->Color = color;
 			s_Data.TriangleVertexBufferPtr++;
 
-			s_Data.TriangleIndexCount += 3;
+			s_Data.TriangleVertexCount += 3;
 		}
 
 	}
